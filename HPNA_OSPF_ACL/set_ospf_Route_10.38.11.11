@@ -1,0 +1,14 @@
+set ns ip 10.38.21.5 -hostRoute ENABLED -hostRtGw 10.38.0.94 -metric 100
+set ns ip 10.38.30.20 -hostRoute ENABLED -hostRtGw 10.38.0.94 -metric 300
+set ns ip 67.217.95.254 -hostRoute ENABLED -hostRtGw 10.38.0.94 -metric 300
+set ns ip 202.173.29.129 -hostRoute ENABLED -hostRtGw 10.38.0.94 -metric 300
+set ns ip 67.217.95.253 -hostRoute ENABLED -hostRtGw 10.38.0.94 -metric 300
+set ns ip 202.173.27.250 -hostRoute ENABLED -hostRtGw 10.38.0.94 -metric 300
+set ns ip 202.173.28.250 -hostRoute ENABLED -hostRtGw 10.38.0.94 -metric 300
+set ns ip 202.173.29.130 -hostRoute ENABLED -hostRtGw 10.38.0.94 -metric 300
+set ns ip 67.217.95.200 -hostRoute ENABLED -hostRtGw 10.38.0.94 -metric 300
+set ns ip 202.173.28.251 -hostRoute ENABLED -hostRtGw 10.38.0.94 -metric 300
+set ns ip 202.173.27.251 -hostRoute ENABLED -hostRtGw 10.38.0.94 -metric 300
+set ns ip 10.38.21.6 -hostRoute ENABLED -hostRtGw 10.38.0.94 -metric 300
+set ns ip 10.224.32.1 -hostRoute ENABLED -hostRtGw 10.38.0.94 -metric 300
+set ns ip 10.38.30.22 -hostRoute ENABLED -hostRtGw 10.38.0.94 -metric 300

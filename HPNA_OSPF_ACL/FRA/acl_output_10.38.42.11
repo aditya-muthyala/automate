@@ -1,0 +1,27 @@
+access-list 10 remark ## live
+access-list 10 permit 10.38.54.10
+access-list 10 permit 78.108.127.16
+access-list 10 permit 78.108.127.24
+access-list 10 permit 78.108.127.11
+access-list 10 permit 78.108.127.9
+access-list 10 permit 78.108.127.17
+access-list 10 permit 78.108.127.21
+access-list 10 permit 10.38.54.11
+access-list 30 remark ## general
+access-list 30 permit 78.108.120.130
+access-list 30 permit 67.217.95.200
+access-list 30 permit 10.38.54.12
+access-list 30 permit 78.108.120.135
+access-list 30 permit 78.108.120.133
+access-list 30 permit 78.108.120.134
+access-list 30 permit 67.217.95.254
+access-list 30 permit 173.199.12.13
+access-list 30 permit 10.38.62.22
+access-list 30 permit 78.108.119.250
+access-list 30 permit 78.108.118.250
+access-list 30 permit 78.108.120.131
+access-list 30 permit 10.38.62.20
+access-list 30 permit 78.108.120.132
+access-list 30 permit 78.108.120.20
+access-list 30 permit 78.108.120.222
+access-list 30 permit 78.108.120.129
