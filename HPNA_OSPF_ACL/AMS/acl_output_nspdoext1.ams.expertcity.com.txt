@@ -1,0 +1,8 @@
+access-list 10 remark ####### live
+access-list 10 permit 78.108.126.254
+access-list 10 permit 78.108.126.244
+access-list 10 permit 78.108.126.252
+access-list 10 permit 10.38.193.10
+access-list 10 permit 78.108.126.253
+access-list 10 permit 78.108.126.251
+access-list 10 permit 78.108.126.250
