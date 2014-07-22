@@ -7,6 +7,33 @@ from HPNA import HPNA
 
 class VserverIPHandler:
 
+  #Example for portAddress_str [Address[172.29.3.69], Mask[255.255.255.255], Type[3]]
+  def extract_ip(self, portAddress_str):
+	address_str = portAddress_str.split(',')[0]
+	match_set = re.search('\d+.\d+.\d+.\d+', address_str)
+	if match_set is not None:
+		portAddress = match_set.group(0)
+		return portAddress
+	else:
+		return 'Empty'
+  #
+  def extract_wildcard(self, portAddress_str):
+	'''
+	First extract the mask from the string [Address[172.29.3.69], Mask[255.255.255.255], Type[3]]
+	'''
+	mask_str = portAddress_str.split(',')[1]
+	match_set = re.search('\d+.\d+.\d+.\d+', mask_str)
+	if match_set is not None:
+		portMask = match_set.group(0)
+		maskList = portMask.split('.')
+		wildcardList = []
+		for octect in maskList:
+			wildcardList.append( str(255 - int(octect)) )
+		wildCard = '.'.join(wildcardList)
+		return wildCard
+	else:
+		return 'Empty'
+
   def generateACLMap(self, vserver_ips):
 	'''
 	Generates a map for intermediate processing
@@ -21,17 +48,24 @@ class VserverIPHandler:
 	live = []
 	dr = []
 	general = []
+	vlan = []
 	for vserverName, ip in vserver_ips.items():
+		ipaddress = self.extract_ip(ip)
 		if settings.tagMatchGeneral.search(vserverName) is not None:
-			general.append( { vserverName : ip } )
+			general.append( { vserverName : ipaddress } )
 		elif settings.tagMatchDR.search(vserverName) is not None:
-			dr.append( { vserverName : ip } )
+			dr.append( { vserverName : ipaddress } )
+		elif settings.tagMatchVlan.search(vserverName) is not None:
+			#print "%s : %s" % vserverName, ipaddress
+			wildCard = self.extract_wildcard(ip)
+			vlan.append( { vserverName : (ipaddress, wildCard) } )
 		else:
-			live.append( { vserverName : ip } )
+			live.append( { vserverName : ipaddress } )
 	
 	aclMap['dr'] = dr
 	aclMap['live'] = live
 	aclMap['general'] = general
+	aclMap['vlan'] = vlan
 	return aclMap
 
   def generateACL(self, aclMap, deviceIp):
@@ -54,7 +88,10 @@ class VserverIPHandler:
 				outFile.write(remark)
 				for vserver in vserverList:
 					vserverName, vserverIp = vserver.popitem()
-					permit = 'access-list ' + str(settings.aclNumber[vserverTagType]) + ' permit ' + vserverIp + '\n'
+					if settings.tagMatchVlan.search(vserverName) is not None:
+						permit = 'access-list ' + str(settings.aclNumber[vserverTagType]) + ' permit ' + vserverIp[0] + ' ' + vserverIp[1] + '\n'
+					else:
+						permit = 'access-list ' + str(settings.aclNumber[vserverTagType]) + ' permit ' + vserverIp + '\n'
 					outFile.write(permit)
 		
 	except Exception as err:

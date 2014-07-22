@@ -106,13 +106,15 @@ class HPNA:
         if condition checks to see if the port type is a VIP and has 
         an IP address assign to it
         '''
-        if portType.find('VIP') != -1 and portAddress_str:
+        portTypeMatch = re.compile('VIP|VLAN')
+        
+        if portTypeMatch.search(portType) is not None and portAddress_str:
           '''
           extract_ip() is used to parse the ipAddress field
           see above for the format
           '''
-          portAddress = self.extract_ip(portAddress_str)
-          vserver_ip[portname] = portAddress
+          #portAddress = self.extract_ip(portAddress_str)
+          vserver_ip[portname] = portAddress_str
           #print "%s : %s" % (portname, portAddress)
       
     except KeyError:
